@@ -43,8 +43,29 @@ namespace testApi.Controllers
             var stockModel = stockDto.ToStockFromCreateStockDto();
             _context.Stock.Add(stockModel);
             _context.SaveChanges();
-            
+
             return CreatedAtAction(nameof(GetById), new {id = stockModel.Id}, stockModel.ToStockDto());
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateStockDto updateStock){
+            var existingStock = _context.Stock.FirstOrDefault(x => x.Id == id);
+
+            if (existingStock == null)
+            {
+                return NotFound();                
+            };
+
+            existingStock.Purchase = updateStock.Purchase;
+            existingStock.LastDiv = updateStock.LastDiv;
+            existingStock.MarketCap = updateStock.MarketCap;
+
+            _context.SaveChanges();
+
+            return Ok(existingStock.ToStockDto());
+            
         }
 
     }

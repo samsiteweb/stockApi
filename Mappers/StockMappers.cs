@@ -33,5 +33,15 @@ namespace testApi.Mappers
                 MarketCap = stockDto.MarketCap
             };
         }
+
+        public static Stock ToStockFromUpdateStockDto(this UpdateStockDto updateStockDto){
+            return new Stock 
+            {
+                LastDiv = updateStockDto.LastDiv,
+                Purchase = updateStockDto.Purchase,
+                Industry = updateStockDto.Industry,
+                MarketCap = updateStockDto.MarketCap
+            };
+        }
     }
 }
