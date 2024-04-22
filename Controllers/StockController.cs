@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using testApi.Data;
+using testApi.Mappers;
 
 namespace testApi.Controllers
 {
@@ -20,7 +21,7 @@ namespace testApi.Controllers
        [HttpGet]
 
        public IActionResult GetAll(){
-            var stocks = _context.Stock.ToList();
+            var stocks = _context.Stock.ToList().Select(s => s.ToStockDto());
 
             return Ok(stocks);
 
@@ -35,7 +36,7 @@ namespace testApi.Controllers
                 return NotFound();
             }
 
-            return Ok(stock);
+            return Ok(stock.ToStockDto());
         }
 
     }
