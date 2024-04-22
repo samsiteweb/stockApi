@@ -7,7 +7,7 @@ using testApi.Models;
 
 namespace testApi.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext: DbContext
     {
         public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
