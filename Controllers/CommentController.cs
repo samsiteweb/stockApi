@@ -31,6 +31,11 @@ namespace testApi.Controllers
 
         [HttpPost("{stockId:int}")]
         public async Task<IActionResult> Create( [FromBody] CreateCommentDto createCommentDto, [FromRoute] int stockId){
+
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
             var stockExist = await _stockRepo.StockExist(stockId);
 
             if (!stockExist)
@@ -46,6 +51,11 @@ namespace testApi.Controllers
         [HttpGet]
         [Route("stockComments/{stockId:int}")]
         public async Task<IActionResult> GetByStockId([FromRoute] int stockId){
+
+             if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
             var allStockComments = await _commentRepo.GetByStockIdAsync(stockId);
             var comments = allStockComments?.Select(c => c.ToCommentDto());
 
@@ -56,6 +66,11 @@ namespace testApi.Controllers
         [HttpGet]
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id){
+
+             if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
             var comments = await _commentRepo.GetByIdAsync(id);
 
             if (comments == null)
@@ -69,6 +84,11 @@ namespace testApi.Controllers
         [HttpPut]
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentDto updateCommentDto){
+
+             if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
             var comment = await _commentRepo.UpdateAsync(id, updateCommentDto);
          
             return Ok(comment?.ToCommentDto());
@@ -77,6 +97,11 @@ namespace testApi.Controllers
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id){
+
+             if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            
             await _commentRepo.DeleteAsync(id);
 
             return NoContent();
