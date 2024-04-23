@@ -14,5 +14,6 @@ namespace testApi.interfaces
         Task<Stock> CreateAsync(Stock stockModel);
         Task<Stock?> UpdateStock(int id, UpdateStockDto stockDto);
         Task<Stock?> DeleteStock(int id);
+        Task<Boolean> StockExist(int id);
     }
 }

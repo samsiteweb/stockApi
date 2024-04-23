@@ -27,7 +27,7 @@ namespace testApi.Repository
 
         public async Task<Stock?> DeleteStock(int id)
         {
-            var existingStock = await _context.Stock.FirstOrDefaultAsync(x => x.Id == id);
+            var existingStock = await _context.Stock.Include(c => c.Comments).FirstOrDefaultAsync(x => x.Id == id);
             
             if (existingStock == null)
             {
@@ -42,7 +42,7 @@ namespace testApi.Repository
 
         public async Task<Stock?> GetStockByIdAsync(int id)
         {   
-            var stock = await _context.Stock.FindAsync(id);
+            var stock = await _context.Stock.Include(c => c.Comments).FirstOrDefaultAsync(x => x.Id == id);;
 
             if (stock == null){
                 return null;
@@ -52,7 +52,7 @@ namespace testApi.Repository
 
         public async Task<Stock?> UpdateStock(int id, UpdateStockDto stockDto)
         {
-              var stockModel = await _context.Stock.FirstOrDefaultAsync(x => x.Id == id);
+              var stockModel = await _context.Stock.Include(c => c.Comments).FirstOrDefaultAsync(x => x.Id == id);
 
             if (stockModel == null)
             {
@@ -70,7 +70,12 @@ namespace testApi.Repository
 
         public async Task<List<Stock>> GetAllAsync()
         {
-             return await _context.Stock.ToListAsync();
+             return await _context.Stock.Include(c => c.Comments).ToListAsync();
+        }
+
+        public Task<bool> StockExist(int id)
+        {
+            return _context.Stock.AnyAsync(s => s.Id == id);
         }
     }
 }

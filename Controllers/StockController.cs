@@ -32,7 +32,7 @@ namespace testApi.Controllers
 
        }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id){
             var stock = await _stockRepo.GetStockByIdAsync(id);
 
@@ -48,7 +48,7 @@ namespace testApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
 
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStockDto updateStock){
             var updatedStock = await _stockRepo.UpdateStock(id, updateStock);
@@ -58,7 +58,7 @@ namespace testApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
 
         public async Task<IActionResult> Delete([FromRoute] int id){
             await _stockRepo.DeleteStock(id);
