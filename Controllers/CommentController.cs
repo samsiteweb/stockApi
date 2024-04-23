@@ -18,6 +18,7 @@ namespace testApi.Controllers
             _commentRepo = commentRepo;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetAll(){
         var allComments = await  _commentRepo.GetAllAsync();
         var comments = allComments.Select(c => c.ToCommentDto());
